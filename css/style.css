@@ -1,0 +1,348 @@
+:root {
+--darkblue: #1A252F;
+--creamwhite: #F5F3E7;
+--burgundy: #6B2D2D;
+--red: #FF0000;
+--font_headline: 'Merriweather', sans-serif;
+--font_text: 'OpenSans', sans-serif;
+}
+
+@font-face {
+    font-family: 'Merriweather';
+    src: url('/assets/fonts/merriweather_woff/Merriweather_24pt_SemiCondensed-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: bold;
+}
+
+@font-face {
+    font-family: 'Merriweather';
+    src: url('/assets/fonts/merriweather_woff/Merriweather_24pt_SemiCondensed-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('/assets/fonts/open_sans_woff/OpenSans_Condensed-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: bold;
+}
+
+@font-face {
+    font-family: 'OpenSans';
+    src: url('/assets/fonts/open_sans_woff/OpenSans_Condensed-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+header {
+    background-color: var(--darkblue);
+    height: 200px; 
+}
+
+header .container_limit {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+footer {
+    background-color: var(--darkblue);
+    height: 200px;
+    display: flex;
+}
+
+.footer_flexbox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 25px;
+}
+
+.logo {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+
+}
+
+.copyright {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.headline_books {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+}
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding:  20px 0;   
+}
+
+.product_card {
+    background-color: var(--creamwhite);
+    color: var(--darkblue);
+    width: 100%;
+    max-width: 300px;
+    min-width: 250px;
+    min-height: 400px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 5px 6px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+.product_card:hover {
+    transform: translateY(-5px);
+    /* cursor: pointer; */
+}
+
+.product_card h2 {
+    font-family: var(--font_headline);
+    font-weight: 700;
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.product_card .bold {
+    font-weight: 700;
+}
+
+.product_card > div{
+    flex: 1;
+    width: 100%;
+}
+
+.modal_content .bold{
+    font-weight: 700;
+    color: var(--burgundy);
+    display: block;
+    width: 150px;
+}
+
+.comment_text {
+    color: var(--darkblue);
+    display: block;
+    font-size: 0.9em;
+}
+
+.comment_block {
+    display: flex; 
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    padding: 5px; 
+}
+
+
+
+.product_card ul {
+    list-style-type: none;
+    margin-top: 10px;
+}
+
+.product_card li {
+    font-size: 0.9em;
+    color: var(--burgundy);
+    list-style: none;
+}
+
+.book_container{
+    display: flex;
+    justify-content: center;
+    width: 150px;
+    height: 150px;
+}
+
+.book {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.like_icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    position: absolute;
+    top: 17px;
+    right: 17px;
+    filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+.comment_button {
+    background-color: var(--darkblue);
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 25px;
+    font-family: var(--font-text);
+    font-size: 0.9em;
+}
+
+.comment_button:hover {
+    background-color: var(--burgundy);
+    transform: scale(1.05);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal_content {
+    background-color: var(--creamwhite);
+    color: var(--darkblue);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.comment_form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.comment_form input {
+    padding: 10px;
+    border: 1px solid var(--darkblue);
+    border-radius: 5px;
+    font-family: var(--font_text);
+    font-size: 1em;
+    color: var(--darkblue);
+    font-weight: 400;
+}
+
+#comment_form .comment_button{
+    align-self: flex-end;
+}
+
+.comment_block .bold {
+    font-weight: 700
+}
+
+.edit_button {
+    background-color: var(--darkblue);
+    color: white;
+    border: none;
+    padding: 3px 6px; /* Daha küçük, minimal */
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: var(--font_text);
+    font-size: 0.65em; /* comment_button’dan biraz küçük */
+    margin-right: 50px;
+    line-height: 1.2em;
+}
+
+.edit_button:hover {
+    background-color: var(--burgundy);
+    transform: scale(1.05);
+}
+
+.close_button {
+    width: 30px;
+    position: absolute;
+    top: 3px;
+    right: 10px;
+    font-size: 2.5em;
+    cursor: pointer;
+    color: var(--darkblue);
+}
+
+.close_button:hover {
+    color: var(--burgundy);
+}
+
+.modal_content h2 {
+    font-family: var(--font-headline);
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+#modalComments {
+    margin-top: 10px;
+}
+
+@media(max-width: 375px) {
+    .container_limit {
+        padding: 0 10px; /* Küçük ekranlarda padding azalt */
+    }
+    .product_card {
+        min-width: 100%; /* 320px’de tam genişlik */
+        padding: 10px;
+    }
+    .product_card h2 {
+        font-size: 1.2em; /* Başlık küçülür */
+    }
+    .product_card li {
+        font-size: 0.8em; /* Yorumlar küçülür */
+    }
+    .cards {
+        padding: 10px;
+        gap: 10px;
+    }
+    .book_container, .book {
+        width: 120px;
+        height: 120px;
+    }
+    .like_icon {
+        width: 20px;
+        height: 20px;
+        top: 5px;
+        right: 5px;
+    }
+    .comment_button {
+        padding: 6px 10px;
+        font-size: 0.8em;
+    }
+
+    .modal_content .bold {
+        width: 100px; /* Küçük ekranlarda daha dar */
+    }
+    .comment_text {
+        font-size: 0.8em;
+    }
+    .comment_block {
+        display: flex; /* Yeni: Mobil için flex düzenini koru */
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 5px;
+        padding: 5px;
+    }
+    .edit_button {
+        margin-left: auto;
+    } 
+}

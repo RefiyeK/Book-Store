@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Store</title>
+    <link rel="icon" sizes="32x32" href="./assets/img/Logo_favicon.png">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/standard.css"> 
+    <script src="./scripts/script.js"defer></script>
+    
+</head>
+
+
+<body>
+    
+    <header>
+            <section class="container_limit">                   
+                        <img class="logo" src="./assets/img/Logo-white.png" alt="Bücher Burg Logo">                         
+            </section> 
+    </header>
+
+
+    <main class="container_limit">
+        <section class="headline_books">
+           
+            <h1>Bücher Burg</h1>
+            <div id="content" class="cards"> </div>
+                        
+        </section>    
+    </main>
+ 
+
+    <footer>   
+
+        <section class="container_limit footer_flexbox">
+                        <img class="logo" src="./assets/img/Logo-white.png" alt="Book Store Logo">
+                        <img class="copyright" src="./assets/img/copyright-white.png" alt="Copyright">
+        </section>   
+    </footer>
+   
+        <div id="commentModal" class="modal">
+            <div class="modal_content">
+                <span class="close_button">&times;</span>
+                <h2>Kommentare</h2>
+                    <form id="comment_form">
+                    <input type="text" id="comment_name" placeholder="Name" required>
+                    <input type="text" id="comment_text" placeholder="Kommentar" required>
+                    <button type="submit" class="comment_button">Kommentar hinzufügen</button>
+            </form>
+                <div id="modalComments"></div>
+        </div>
+
+
+</body>
+</html>
