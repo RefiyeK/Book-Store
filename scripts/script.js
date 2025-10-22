@@ -1,4 +1,4 @@
-let books = [
+const books = [
     {
       "name": "Die Geheimnisse des Ozeans",
       "author": "Clara Meer",
@@ -184,8 +184,15 @@ const HEART_WHITE = './assets/icon/heart_white.png';
 const STORAGE_KEY = 'buecherBurgBooks'; //localStorage anahtari
 const COMMENT_FORM_ID = 'comment_form'; //Form ID si
 const COMMENT_NAME_ID = 'comment_name'; //Isim Input ID si
-const COMMENT_TEXT_ID = 'comment_text'; //Yorum Input ID si
+const COMMENT_TEXT_ID = 'comment_text'; //Yorum ID si
 const EDIT_BUTTON_CLASS = 'edit_button'; //Düzenleme butonu
+
+
+const contentElement = document.getElementById(CONTENT_ID);
+const modalElement = document.getElementById(MODAL_ID);
+const modalCommentsElement = document.getElementById(MODAL_COMMENTS_ID);
+const commentForm = document.getElementById(COMMENT_FORM_ID);
+
 
 function saveBooksToLocalStorage() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
@@ -198,43 +205,20 @@ function loadBooksFromLocalStorage() {
     const storedBooks = localStorage.getItem(STORAGE_KEY);
     if (storedBooks) {
         const parsedBooks = JSON.parse(storedBooks);
-        for (let i = 0; i < books.length; i++) {
-            books[i].liked = parsedBooks[i].liked;
-            books[i].likes = parsedBooks[i].likes;
-            books[i].comments = parsedBooks[i].comments; //Yeni yorumlari ekle
-        }
-    }
+          if (Array.isArray(parsedBooks) && parsedBooks.length === books.length){
+            for (let i = 0; i < books.length; i++) {
+              books[i].liked = parsedBooks[i].liked;
+              books[i].likes = parsedBooks[i].likes;
+              books[i].comments = parsedBooks[i].comments; //Yeni yorumlari ekle
+         }
+      }
+  }
 }
-
 
 
 //icerigi temizliyor. Arka Plan: İçeriği sıfırlamak için, tekrar render etmeden önce mevcut kartlar temizleniyor.
-function clearContent(contentElement) {
+function clearContent() {
     contentElement.innerHTML = '';
-}
-
-//Kitap kartlarinin HTML`ini olusturma.
-  function getBookCardHTML(index) {
-    const book = books[index];
-    const likeIcon = book.liked ? HEART_RED : HEART_WHITE;
-    const price = book.price.toString().replace(".", ",");
-    return `
-        <div class="product_card">
-            <img class="like_icon" src="${likeIcon}" alt="Like" onclick="bookLike(${index})">
-            <div class="book_container">
-                <img class="book" src="./assets/img/book.png" alt="${book.name}">
-            </div>
-            <h2>${book.name}</h2>
-            <div>
-                <span class="bold">Preis: </span>${price} €<br>
-                <span class="bold">Schriftsteller: </span>${book.author}<br>
-                <span class="bold">Veröffentlichungsjahr: </span>${book.publishedYear}<br>
-                <span class="bold">Genre: </span>${book.genre}<br>
-                <span class="bold">Likes: </span><span class="like_count">${book.likes}</span><br>
-                <button class="comment_button" onclick="openModal(${index})">Kommentare (${book.comments.length})</button>
-            </div>
-        </div>
-    `;
 }
 
 
@@ -253,51 +237,8 @@ function renderBooks() {
 }
 
 
-
-// Yorumun HTML’ini oluşturma yeri.
-function getCommentHTML(indexA, indexB) {
-    const comment = books[indexA].comments[indexB];
-    return `
-        <div class="comment_block">
-            <span class="bold">${comment.name}</span>
-            <button class="${EDIT_BUTTON_CLASS}" onclick="editComment(${indexA}, ${indexB})">Bearbeiten</button>
-            <span class="comment_text">${comment.comment}</span>
-        </div>
-    `;
-}
-
-
-
-function generateModalComments(index) { // Modal yorum içeriğini oluşturur
-    if (books[index].comments.length === 0) {
-        return '<div class="comment_block">Kein Kommentar</div>';
-    }
-    let commentsHTML = '';
-    for (let j = 0; j < books[index].comments.length; j++) {
-        commentsHTML += getCommentHTML(index, j);
-    }
-    return commentsHTML;
-}
-
-
-function addComment(index, name, comment, commentIndex= -1) {
-    //Yeni yorumu comments array’ine ekler, modal’ı ve LocalStorage’ı günceller
-    const modalCommentsElement = document.getElementById(MODAL_COMMENTS_ID);
-    if (commentIndex ===-1){
-      books[index].comments.push({name, comment});//yeni yorum ekle
-    }else {
-      books[index].comments[commentIndex] = {name, comment};//Mevcut yorumu güncelle
-    }
-    modalCommentsElement.innerHTML = generateModalComments(index);
-    saveBooksToLocalStorage(); // Yorumları kaydet
-    // Karttaki yorum sayısını güncelle
-    const bookCardElement = document.getElementsByClassName('product_card')[index];
-    bookCardElement.querySelector('.comment_button').textContent = `Kommentare (${books[index].comments.length})`;
-}
-
 function editComment(bookIndex, commentIndex) {
     const comment = books[bookIndex].comments[commentIndex];
-    const commentForm = document.getElementById(COMMENT_FORM_ID);
     const nameInput = document.getElementById(COMMENT_NAME_ID);
     const textInput = document.getElementById(COMMENT_TEXT_ID);
     const submitButton = commentForm.querySelector('.comment_button');
@@ -305,7 +246,7 @@ function editComment(bookIndex, commentIndex) {
     nameInput.value = comment.name;
     textInput.value = comment.comment;
     // Buton metnini değiştir
-    submitButton.textContent = 'Düzeltmeyi Kaydet';
+    submitButton.textContent = 'Bearbeitung speichern';
     // Düzenleme modunu sakla
     commentForm.dataset.bookIndex = bookIndex;
     commentForm.dataset.commentIndex = commentIndex;
@@ -356,34 +297,38 @@ function bookLike(index) {
         console.error(`Book card for index ${index} not found`);
         return;
     }
-    toggleLike(index);
-    updateLikeCount(bookCardElement, books[index].likes);
-    updateLikeIcon(bookCardElement, books[index].liked);
-    animateLikeIcon(bookCardElement);
+    books[index].liked = !books[index].liked;
+    books[index].likes += books[index].liked ? 1 : -1;
+    const likeCountElement = bookCardElement.querySelector('.like_count');
+    if (likeCountElement) likeCountElement.textContent = books[index].likes;
+    const likeIconElement = bookCardElement.querySelector('.like_icon');
+    if (likeIconElement) {
+        likeIconElement.src = books[index].liked ? HEART_RED : HEART_WHITE;
+        likeIconElement.style.transition = 'transform 0.2s';
+        likeIconElement.style.transform = 'scale(1.2)';
+        setTimeout(() => likeIconElement.style.transform = 'scale(1)', 200);
+    }
 }
+
+
 
 // Modal’ı açilmasi
 function openModal(index) {
-    const modalElement = document.getElementById(MODAL_ID);
-    const modalCommentsElement = document.getElementById(MODAL_COMMENTS_ID);
     if (!modalElement || !modalCommentsElement) {
         console.error(`Modal or comments element not found`);
         return;
     }
     modalCommentsElement.innerHTML = generateModalComments(index);
     modalElement.style.display = 'flex';
-    const commentForm = document.getElementById(COMMENT_FORM_ID); //Formu sifirla ve indexi sakla
-    const submitButton = commentForm.querySelector('.comment_button');
-    commentForm.reset(); //Inputlari temizle ve yeni yorum moduna gec
-    submitButton.textContent = 'Kommentar hinzufügen';
-    commentForm.dataset.bookIndex = index;//Hangi kitaba yorum eklenecegini sakla
-    delete commentForm.dataset.commentIndex; //Düzenleme modunu sifirla
+    commentForm.reset();
+    commentForm.querySelector('.comment_button').textContent = 'Kommentar hinzufügen';
+    commentForm.dataset.bookIndex = index;
+    delete commentForm.dataset.commentIndex;
 }
 
 
 // Modal’ı kapatılmasi
 function closeModal() {
-    const modalElement = document.getElementById(MODAL_ID);
     if (modalElement) {
         modalElement.style.display = 'none';
     }
@@ -391,11 +336,11 @@ function closeModal() {
 
 // Modal dışı tıklamaların yönetildigi yer
 function handleModalOutsideClick(event) {
-    const modalElement = document.getElementById(MODAL_ID);
     if (event.target === modalElement) {
         closeModal();
     }
 }
+
 
 // Kapatma butonunu başlatan yer
 function initializeCloseButton() {
@@ -408,7 +353,6 @@ function initializeCloseButton() {
 
 // Form gönderimini başlatır
 function initializeCommentForm() {
-    const commentForm = document.getElementById(COMMENT_FORM_ID);
     if (commentForm) {
         commentForm.addEventListener('submit', (event) => {
             event.preventDefault(); // Formun sayfayı yenilemesini engelle

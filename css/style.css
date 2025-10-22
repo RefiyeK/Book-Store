@@ -9,28 +9,28 @@
 
 @font-face {
     font-family: 'Merriweather';
-    src: url('/assets/fonts/merriweather_woff/Merriweather_24pt_SemiCondensed-Bold.woff') format('woff');
+    src: url('./assets/fonts/merriweather_woff/Merriweather_24pt_SemiCondensed-Bold.woff') format('woff');
     font-weight: 700;
     font-style: bold;
 }
 
 @font-face {
     font-family: 'Merriweather';
-    src: url('/assets/fonts/merriweather_woff/Merriweather_24pt_SemiCondensed-Regular.woff') format('woff');
+    src: url('./assets/fonts/merriweather_woff/Merriweather_24pt_SemiCondensed-Regular.woff') format('woff');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'OpenSans';
-    src: url('/assets/fonts/open_sans_woff/OpenSans_Condensed-Bold.woff') format('woff');
+    src: url('./assets/fonts/open_sans_woff/OpenSans_Condensed-Bold.woff') format('woff');
     font-weight: 700;
     font-style: bold;
 }
 
 @font-face {
     font-family: 'OpenSans';
-    src: url('/assets/fonts/open_sans_woff/OpenSans_Condensed-Regular.woff') format('woff');
+    src: url('./assets/fonts/open_sans_woff/OpenSans_Condensed-Regular.woff') format('woff');
     font-weight: 400;
     font-style: normal;
 }
@@ -130,35 +130,23 @@ footer {
     font-weight: 700;
     color: var(--burgundy);
     display: block;
-    width: 150px;
+    width: auto;
+}
+
+.comment_block {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--darkblue);
 }
 
 .comment_text {
     color: var(--darkblue);
     display: block;
     font-size: 0.9em;
-}
-
-.comment_block {
-    display: flex; 
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 5px;
-    padding: 5px; 
-}
-
-
-
-.product_card ul {
-    list-style-type: none;
-    margin-top: 10px;
-}
-
-.product_card li {
-    font-size: 0.9em;
-    color: var(--burgundy);
-    list-style: none;
+    word-wrap: break-word;/*uzun kelimeler kirilir*/
 }
 
 .book_container{
@@ -192,7 +180,8 @@ footer {
     padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 25px;
+    margin-top: 3px;
+    margin-bottom: 25px;
     font-family: var(--font-text);
     font-size: 0.9em;
 }
@@ -233,9 +222,11 @@ footer {
     flex-direction: column;
     gap: 10px;
     margin-bottom: 15px;
+    width: 100%;
 }
 
 .comment_form input {
+    box-sizing: border-box;
     padding: 10px;
     border: 1px solid var(--darkblue);
     border-radius: 5px;
@@ -245,7 +236,19 @@ footer {
     font-weight: 400;
 }
 
-#comment_form .comment_button{
+.comment_form textarea {
+    padding: 10px;
+    border: 1px solid var(--darkblue);
+    border-radius: 5px;
+    font-family: var(--font_text);
+    color: var(--darkblue);
+    font-weight: 400;
+    min-height: 60px;
+    resize: vertical;
+    overflow-y: auto;
+}
+
+.comment_form .comment_button{
     align-self: flex-end;
 }
 
@@ -254,16 +257,14 @@ footer {
 }
 
 .edit_button {
+    padding: 3px 6px;
+    font-size: 0.65em;
+    margin-left: auto;
+    margin-right: 0;
     background-color: var(--darkblue);
     color: white;
-    border: none;
-    padding: 3px 6px; /* Daha küçük, minimal */
     border-radius: 5px;
     cursor: pointer;
-    font-family: var(--font_text);
-    font-size: 0.65em; /* comment_button’dan biraz küçük */
-    margin-right: 50px;
-    line-height: 1.2em;
 }
 
 .edit_button:hover {
@@ -286,7 +287,7 @@ footer {
 }
 
 .modal_content h2 {
-    font-family: var(--font-headline);
+    font-family: var(--font_headline);
     font-weight: 700;
     margin-bottom: 15px;
 }
@@ -333,6 +334,7 @@ footer {
     }
     .comment_text {
         font-size: 0.8em;
+        
     }
     .comment_block {
         display: flex; /* Yeni: Mobil için flex düzenini koru */
