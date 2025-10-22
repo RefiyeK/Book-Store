@@ -181,12 +181,11 @@ const MODAL_COMMENTS_ID = 'modalComments';
 const CLOSE_BUTTON_CLASS = 'close_button';
 const HEART_RED = './assets/icon/heart_rot.png';
 const HEART_WHITE = './assets/icon/heart_white.png';
-const STORAGE_KEY = 'buecherBurgBooks'; //localStorage anahtari
-const COMMENT_FORM_ID = 'comment_form'; //Form ID si
-const COMMENT_NAME_ID = 'comment_name'; //Isim Input ID si
-const COMMENT_TEXT_ID = 'comment_text'; //Yorum ID si
-const EDIT_BUTTON_CLASS = 'edit_button'; //Düzenleme butonu
-
+const STORAGE_KEY = 'buecherBurgBooks';
+const COMMENT_FORM_ID = 'comment_form';
+const COMMENT_NAME_ID = 'comment_name';
+const COMMENT_TEXT_ID = 'comment_text';
+const EDIT_BUTTON_CLASS = 'edit_button';
 
 const contentElement = document.getElementById(CONTENT_ID);
 const modalElement = document.getElementById(MODAL_ID);
@@ -196,12 +195,10 @@ const commentForm = document.getElementById(COMMENT_FORM_ID);
 
 function saveBooksToLocalStorage() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
-
 }
 
-// Kitapları LocalStorage’dan yükler
+
 function loadBooksFromLocalStorage() {
-    //LocalStorage’dan veriyi okuyup books dizisini güncelliyor.
     const storedBooks = localStorage.getItem(STORAGE_KEY);
     if (storedBooks) {
         const parsedBooks = JSON.parse(storedBooks);
@@ -209,28 +206,24 @@ function loadBooksFromLocalStorage() {
             for (let i = 0; i < books.length; i++) {
               books[i].liked = parsedBooks[i].liked;
               books[i].likes = parsedBooks[i].likes;
-              books[i].comments = parsedBooks[i].comments; //Yeni yorumlari ekle
+              books[i].comments = parsedBooks[i].comments;
          }
       }
   }
 }
 
 
-//icerigi temizliyor. Arka Plan: İçeriği sıfırlamak için, tekrar render etmeden önce mevcut kartlar temizleniyor.
 function clearContent() {
-    contentElement.innerHTML = '';
+    if (contentElement) contentElement.innerHTML = '';
 }
 
 
-
-// Tüm kitap kartları render etme yeri.
 function renderBooks() {
-    const contentElement = document.getElementById(CONTENT_ID);
     if (!contentElement) {
         console.error(`Element with ID ${CONTENT_ID} not found`);
         return;
     }
-    clearContent(contentElement);
+    clearContent();
     for (let i = 0; i < books.length; i++) {
         contentElement.innerHTML += getBookCardHTML(i);
     }
@@ -241,100 +234,88 @@ function editComment(bookIndex, commentIndex) {
     const comment = books[bookIndex].comments[commentIndex];
     const nameInput = document.getElementById(COMMENT_NAME_ID);
     const textInput = document.getElementById(COMMENT_TEXT_ID);
-    const submitButton = commentForm.querySelector('.comment_button');
-    // Formu doldur
-    nameInput.value = comment.name;
-    textInput.value = comment.comment;
-    // Buton metnini değiştir
-    submitButton.textContent = 'Bearbeitung speichern';
-    // Düzenleme modunu sakla
-    commentForm.dataset.bookIndex = bookIndex;
-    commentForm.dataset.commentIndex = commentIndex;
+    const submitButtons = commentForm.getElementsByClassName('comment_button');
+    if (submitButtons.length > 0) {
+        const submitButton = submitButtons[0];
+        nameInput.value = comment.name;
+        textInput.value = comment.comment;
+        submitButton.textContent = 'Bearbeitung speichern';
+        commentForm.dataset.bookIndex = bookIndex;
+        commentForm.dataset.commentIndex = commentIndex;
+    }
 }
 
 
-
-// Beğeni durumunu değiştiren yer.
 function toggleLike(index) {
     books[index].liked = !books[index].liked;
     books[index].likes += books[index].liked ? 1 : -1;
 }
 
-// Beğeni sayısını güncelleyen alan.
+
 function updateLikeCount(bookCardElement, likes) {
-    const likeCountElement = bookCardElement.querySelector('.like_count');
-    if (likeCountElement) {
-        likeCountElement.textContent = likes;
+    const likeCountElements = bookCardElement.getElementsByClassName('like_count');
+    if (likeCountElements.length > 0) {
+        likeCountElements[0].textContent = likes;
     }
 }
 
-// Kalp ikonunu güncelleyen alan
+
 function updateLikeIcon(bookCardElement, liked) {
-    const likeIconElement = bookCardElement.querySelector('.like_icon');
-    if (likeIconElement) {
-        likeIconElement.src = liked ? HEART_RED : HEART_WHITE;
+    const likeIconElements = bookCardElement.getElementsByClassName('like_icon');
+    if (likeIconElements.length > 0) {
+        likeIconElements[0].src = liked ? HEART_RED : HEART_WHITE;
     }
 }
 
 
-// Kalp ikonuna animasyon ekleyen alan. Kalp büyüyor.
-function animateLikeIcon(bookCardElement) {
-    const likeIconElement = bookCardElement.querySelector('.like_icon');
-    if (likeIconElement) {
-        likeIconElement.style.transition = 'transform 0.2s';
-        likeIconElement.style.transform = 'scale(1.2)';
-        setTimeout(() => {
-            likeIconElement.style.transform = 'scale(1)';
-        }, 200);
-    }
-}
-
-
-// Beğeni işlemini yöneten alan.
 function bookLike(index) {
     const bookCardElement = document.getElementsByClassName('product_card')[index];
-    if (!bookCardElement) {
-        console.error(`Book card for index ${index} not found`);
-        return;
-    }
-    books[index].liked = !books[index].liked;
-    books[index].likes += books[index].liked ? 1 : -1;
-    const likeCountElement = bookCardElement.querySelector('.like_count');
-    if (likeCountElement) likeCountElement.textContent = books[index].likes;
-    const likeIconElement = bookCardElement.querySelector('.like_icon');
-    if (likeIconElement) {
-        likeIconElement.src = books[index].liked ? HEART_RED : HEART_WHITE;
-        likeIconElement.style.transition = 'transform 0.2s';
-        likeIconElement.style.transform = 'scale(1.2)';
-        setTimeout(() => likeIconElement.style.transform = 'scale(1)', 200);
+    if (bookCardElement) {
+        toggleLike(index);
+        updateLikeCount(bookCardElement, books[index].likes);
+        updateLikeIcon(bookCardElement, books[index].liked);
+        animateLikeIcon(bookCardElement);
+        saveBooksToLocalStorage();
     }
 }
 
 
-
-// Modal’ı açilmasi
 function openModal(index) {
     if (!modalElement || !modalCommentsElement) {
         console.error(`Modal or comments element not found`);
         return;
     }
-    modalCommentsElement.innerHTML = generateModalComments(index);
+    modalCommentsElement.innerHTML = generateModalComments(books, index);
     modalElement.style.display = 'flex';
     commentForm.reset();
-    commentForm.querySelector('.comment_button').textContent = 'Kommentar hinzufügen';
+    const commentButtons = commentForm.getElementsByClassName('comment_button');
+    if (commentButtons.length > 0) {
+        commentButtons[0].textContent = 'Kommentar hinzufügen';
+    }
     commentForm.dataset.bookIndex = index;
     delete commentForm.dataset.commentIndex;
 }
+// function openModal(index) {
+//     if (!modalElement || !modalCommentsElement) {
+//         console.error(`Modal or comments element not found`);
+//         return;
+//     }
+//     modalCommentsElement.innerHTML = generateModalComments(index);
+//     modalElement.style.display = 'flex';
+//     commentForm.reset();
+//     commentForm.querySelector('.comment_button').textContent = 'Kommentar hinzufügen';
+//     commentForm.dataset.bookIndex = index;
+//     delete commentForm.dataset.commentIndex;
+// }
 
 
-// Modal’ı kapatılmasi
 function closeModal() {
     if (modalElement) {
         modalElement.style.display = 'none';
     }
 }
 
-// Modal dışı tıklamaların yönetildigi yer
+
 function handleModalOutsideClick(event) {
     if (event.target === modalElement) {
         closeModal();
@@ -342,39 +323,41 @@ function handleModalOutsideClick(event) {
 }
 
 
-// Kapatma butonunu başlatan yer
 function initializeCloseButton() {
-    const closeButton = document.querySelector(`.${CLOSE_BUTTON_CLASS}`);
-    if (closeButton) {
-        closeButton.addEventListener('click', closeModal);
+    const closeButtons = document.getElementsByClassName(CLOSE_BUTTON_CLASS);
+    if (closeButtons.length > 0) {
+        closeButtons[0].addEventListener('click', closeModal);
     }
 }
 
 
-// Form gönderimini başlatır
 function initializeCommentForm() {
     if (commentForm) {
         commentForm.addEventListener('submit', (event) => {
-            event.preventDefault(); // Formun sayfayı yenilemesini engelle
+            event.preventDefault();
             const name = document.getElementById(COMMENT_NAME_ID).value;
             const comment = document.getElementById(COMMENT_TEXT_ID).value;
             const bookIndex = parseInt(commentForm.dataset.bookIndex);
             const commentIndex = commentForm.dataset.commentIndex ? parseInt(commentForm.dataset.commentIndex) : -1;
-            if (name && comment) { // Input’lar boş değilse
+            if (name && comment) {
                 addComment(bookIndex, name, comment, commentIndex);
-                commentForm.reset(); // Formu sıfırla
+                commentForm.reset();
+                const commentButtons = commentForm.getElementsByClassName('comment_button');
+                if (commentButtons.length > 0) {
+                    commentButtons[0].textContent = 'Kommentar hinzufügen';
+                }
                 commentForm.querySelector('.comment_button').textContent = 'Kommentar hinzufügen';
-                delete commentForm.dataset.commentIndex; // Düzenleme modunu sıfırla
+                delete commentForm.dataset.commentIndex;
             }
         });
     }
 }
 
-// Sayfa yüklendiğinde başlat
+
 document.addEventListener('DOMContentLoaded', () => {
     loadBooksFromLocalStorage();
     initializeCloseButton();
-    initializeCommentForm(); // Yeni: Formu başlat
+    initializeCommentForm();
     window.addEventListener('click', handleModalOutsideClick);
     renderBooks();
 });

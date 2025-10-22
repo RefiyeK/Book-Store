@@ -1,5 +1,4 @@
 
-//Kitap kartlarinin HTML`ini olusturma.
   function getBookCardHTML(index) {
     const book = books[index];
     const likeIcon = book.liked ? HEART_RED : HEART_WHITE;
@@ -17,15 +16,13 @@
                 <span class="bold">Veröffentlichungsjahr: </span>${book.publishedYear}<br>
                 <span class="bold">Genre: </span>${book.genre}<br>
                 <span class="bold">Likes: </span><span class="like_count">${book.likes}</span><br>
-                <button class="comment_button" onclick="openModal(${index})">Kommentare (${book.comments.length})</button>
+                <button class="comment_button" onclick="openModal(${index})">Kommentare</button>
             </div>
         </div>
     `;
 }
 
 
-
-// Yorumun HTML’ini oluşturma yeri.
 function getCommentHTML(indexA, indexB) {
     const comment = books[indexA].comments[indexB];
     return `
@@ -39,7 +36,7 @@ function getCommentHTML(indexA, indexB) {
 
 
 
-function generateModalComments(index) { // Modal yorum içeriğini oluşturur
+function generateModalComments(books, index) {
     if (books[index].comments.length === 0) {
         return '<div class="comment_block">Kein Kommentar</div>';
     }
@@ -51,21 +48,12 @@ function generateModalComments(index) { // Modal yorum içeriğini oluşturur
 }
 
 
-
-function addComment(index, name, comment, commentIndex= -1) {
-    if (commentIndex === -1){
-      books[index].comments.push({name, comment});//yeni yorum ekle
-    }else {
-      books[index].comments[commentIndex] = {name, comment};//Mevcut yorumu güncelle
+function addComment(index, name, comment, commentIndex = -1) {
+    if (commentIndex === -1) {
+        books[index].comments.push({ name, comment });
+    } else {
+        books[index].comments[commentIndex] = { name, comment };
     }
-    modalCommentsElement.innerHTML = generateModalComments(index);
-    saveBooksToLocalStorage(); // Yorumları kaydet
-    // Karttaki yorum sayısını güncelle
-    const bookCardElement = document.getElementsByClassName('product_card')[index];
-    if (bookCardElement) {
-        const commentButton = bookCardElement.querySelector('.comment_button');
-        if (commentButton) {
-            commentButton.textContent = `Kommentare (${books[index].comments.length})`;
-        }
-    }
+    modalCommentsElement.innerHTML = generateModalComments(books, index);
+    saveBooksToLocalStorage();
 }

@@ -9,28 +9,28 @@
 
 @font-face {
     font-family: 'Merriweather';
-    src: url('./assets/fonts/merriweather_woff/Merriweather_24pt_SemiCondensed-Bold.woff') format('woff');
+    src: url('../assets/fonts/merriweather_woff/Merriweather_24pt_SemiCondensed-Bold.woff') format('woff');
     font-weight: 700;
     font-style: bold;
 }
 
 @font-face {
     font-family: 'Merriweather';
-    src: url('./assets/fonts/merriweather_woff/Merriweather_24pt_SemiCondensed-Regular.woff') format('woff');
+    src: url('../assets/fonts/merriweather_woff/Merriweather_24pt_SemiCondensed-Regular.woff') format('woff');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'OpenSans';
-    src: url('./assets/fonts/open_sans_woff/OpenSans_Condensed-Bold.woff') format('woff');
+    src: url('../assets/fonts/open_sans_woff/OpenSans_Condensed-Bold.woff') format('woff');
     font-weight: 700;
     font-style: bold;
 }
 
 @font-face {
     font-family: 'OpenSans';
-    src: url('./assets/fonts/open_sans_woff/OpenSans_Condensed-Regular.woff') format('woff');
+    src: url('../assets/fonts/open_sans_woff/OpenSans_Condensed-Regular.woff') format('woff');
     font-weight: 400;
     font-style: normal;
 }
@@ -96,7 +96,7 @@ footer {
     min-height: 400px;
     padding: 15px;
     border-radius: 10px;
-    box-shadow: 5px 6px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 5px 6px 8px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s ease-in-out;
     display: flex;
     flex-direction: column;
@@ -180,8 +180,8 @@ footer {
     padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 3px;
-    margin-bottom: 25px;
+    margin-top: 25px;
+    margin-bottom: 20px;
     font-family: var(--font-text);
     font-size: 0.9em;
 }
@@ -298,17 +298,17 @@ footer {
 
 @media(max-width: 375px) {
     .container_limit {
-        padding: 0 10px; /* Küçük ekranlarda padding azalt */
+        padding: 0 10px;
     }
     .product_card {
-        min-width: 100%; /* 320px’de tam genişlik */
+        min-width: 100%; 
         padding: 10px;
     }
     .product_card h2 {
-        font-size: 1.2em; /* Başlık küçülür */
+        font-size: 1.2em;
     }
     .product_card li {
-        font-size: 0.8em; /* Yorumlar küçülür */
+        font-size: 0.8em;
     }
     .cards {
         padding: 10px;
@@ -328,16 +328,14 @@ footer {
         padding: 6px 10px;
         font-size: 0.8em;
     }
-
     .modal_content .bold {
-        width: 100px; /* Küçük ekranlarda daha dar */
+        width: 100px;
     }
     .comment_text {
         font-size: 0.8em;
-        
     }
     .comment_block {
-        display: flex; /* Yeni: Mobil için flex düzenini koru */
+        display: flex;
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
