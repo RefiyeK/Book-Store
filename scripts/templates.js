@@ -35,7 +35,6 @@ function getCommentHTML(indexA, indexB) {
 }
 
 
-
 function generateModalComments(books, index) {
     if (books[index].comments.length === 0) {
         return '<div class="comment_block">Kein Kommentar</div>';

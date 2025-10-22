@@ -64,7 +64,6 @@ footer {
     width: 150px;
     height: 150px;
     object-fit: contain;
-
 }
 
 .copyright {
@@ -79,6 +78,7 @@ footer {
     align-items: center;
     padding: 20px 0;
 }
+
 .cards {
     display: flex;
     flex-wrap: wrap;

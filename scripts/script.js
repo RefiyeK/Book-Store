@@ -295,18 +295,6 @@ function openModal(index) {
     commentForm.dataset.bookIndex = index;
     delete commentForm.dataset.commentIndex;
 }
-// function openModal(index) {
-//     if (!modalElement || !modalCommentsElement) {
-//         console.error(`Modal or comments element not found`);
-//         return;
-//     }
-//     modalCommentsElement.innerHTML = generateModalComments(index);
-//     modalElement.style.display = 'flex';
-//     commentForm.reset();
-//     commentForm.querySelector('.comment_button').textContent = 'Kommentar hinzufügen';
-//     commentForm.dataset.bookIndex = index;
-//     delete commentForm.dataset.commentIndex;
-// }
 
 
 function closeModal() {
