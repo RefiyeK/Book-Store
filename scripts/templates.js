@@ -5,7 +5,10 @@
     const price = book.price.toString().replace(".", ",");
     return `
         <div class="product_card">
-            <img class="like_icon" src="${likeIcon}" alt="Like" onclick="bookLike(${index})">
+                <div class="like_number">
+                    <img class="like_icon" src="${likeIcon}" alt="Like" onclick="bookLike(${index})">
+                    <p class="bold like_count">${book.likes}</p><br>
+                </div>
             <div class="book_container">
                 <img class="book" src="./assets/img/book.png" alt="${book.name}">
             </div>
@@ -15,7 +18,6 @@
                 <span class="bold">Schriftsteller: </span>${book.author}<br>
                 <span class="bold">Veröffentlichungsjahr: </span>${book.publishedYear}<br>
                 <span class="bold">Genre: </span>${book.genre}<br>
-                <span class="bold">Likes: </span><span class="like_count">${book.likes}</span><br>
                 <button class="comment_button" onclick="openModal(${index})">Kommentare</button>
             </div>
         </div>

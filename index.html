@@ -7,6 +7,7 @@
     <link rel="icon" sizes="32x32" href="./assets/img/Logo_favicon.png">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/standard.css"> 
+    <script src="./scripts/db.js" defer></script>
     <script src="./scripts/script.js" defer></script>
     <script src="./scripts/templates.js" defer></script>
 </head>
@@ -32,22 +33,26 @@
     <footer>   
         <section class="container_limit footer_flexbox">
             <img class="logo" src="./assets/img/Logo-white.png" alt="Bücher Burg Logo">
-            <img class="copyright" src="./assets/img/copyright-white.png" alt="Copyright">
+            <div class="icon_container">
+                <img class="copyright" src="./assets/img/copyright-white.png" alt="Copyright">
+                <p class="copyright">2025 - Refiye</p>
+            </div>
         </section>   
     </footer>
    
         <div id="commentModal" class="modal">
             <div class="modal_content">
+                <div class="comment_content">
                 <span class="close_button">&times;</span>
-                <h2>Kommentare</h2>
-                    <form id="comment_form" class="comment_form">
-                    <input type="text" id="comment_name" placeholder="Name" required>
-                    <textarea id="comment_text" placeholder="Kommentar" required></textarea>
-                    <button type="submit" class="comment_button">Kommentar hinzufügen</button>
-            </form>
+                    <h2>Kommentare</h2>
+                        <form id="comment_form" class="comment_form">
+                            <input type="text" id="comment_name" placeholder="Name" required>
+                            <textarea id="comment_text" placeholder="Kommentar" required></textarea>
+                            <button type="submit" class="comment_button">Kommentar hinzufügen</button>
+                        </form>
+                </div>    
                 <div id="modalComments"></div>
             </div>
-        </div>
-        
+        </div>        
 </body>
 </html>

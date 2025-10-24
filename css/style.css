@@ -37,7 +37,7 @@
 
 header {
     background-color: var(--darkblue);
-    height: 200px; 
+    height: 120px; 
 }
 
 header .container_limit {
@@ -48,7 +48,7 @@ header .container_limit {
 
 footer {
     background-color: var(--darkblue);
-    height: 200px;
+    height: 120px;
     display: flex;
 }
 
@@ -60,9 +60,20 @@ footer {
     padding: 25px;
 }
 
+.icon_container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.copyright {
+    font-family: var(--font_text);
+    color: white;
+}
+
 .logo {
-    width: 150px;
-    height: 150px;
+    width: 80px;
+    height: 100px;
     object-fit: contain;
 }
 
@@ -115,6 +126,7 @@ footer {
     font-weight: 700;
     font-size: 1.5em;
     margin-bottom: 10px;
+    padding-top: 16px;
 }
 
 .product_card .bold {
@@ -124,6 +136,28 @@ footer {
 .product_card > div{
     flex: 1;
     width: 100%;
+}
+
+.like_number {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: absolute;
+}
+
+.like_count {
+    padding: 40px 20px 0 0;
+}
+
+.comment_content {
+    position: sticky;
+    top: 0;
+    background-color: var(--creamwhite);
+    padding: 20px 20px 0 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1;
 }
 
 .modal_content .bold{
@@ -151,14 +185,15 @@ footer {
 
 .book_container{
     display: flex;
+    align-items: end;
     justify-content: center;
     width: 150px;
     height: 150px;
 }
 
 .book {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
     border-radius: 5px;
 }
@@ -173,6 +208,7 @@ footer {
     filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.3));
 }
 
+
 .comment_button {
     background-color: var(--darkblue);
     color: white;
@@ -180,10 +216,9 @@ footer {
     padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 25px;
-    margin-bottom: 20px;
     font-family: var(--font-text);
     font-size: 0.9em;
+    margin-top: 15px;
 }
 
 .comment_button:hover {
@@ -207,13 +242,13 @@ footer {
 .modal_content {
     background-color: var(--creamwhite);
     color: var(--darkblue);
-    padding: 20px;
+    padding: 0;
     border-radius: 10px;
     max-width: 500px;
     width: 90%;
     max-height: 80vh;
-    overflow-y: auto;
-    position: relative;
+    display: flex;
+    flex-direction: column;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -293,7 +328,9 @@ footer {
 }
 
 #modalComments {
-    margin-top: 10px;
+    max-height: 40vh;
+    overflow: auto;
+    padding: 20px;
 }
 
 @media(max-width: 375px) {
@@ -345,4 +382,8 @@ footer {
     .edit_button {
         margin-left: auto;
     } 
+    .like_count {
+    font-size: 0.9em;
+    padding: 21px 4px 0 0;
+}
 }
