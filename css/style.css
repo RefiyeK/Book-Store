@@ -63,10 +63,15 @@ footer {
 .icon_container {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
 }
 
-.copyright {
+.copyright{
+    font-family: var(--font_text);
+    color: white;
+}
+
+.name {
     font-family: var(--font_text);
     color: white;
 }
